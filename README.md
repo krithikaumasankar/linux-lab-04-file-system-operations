@@ -1,78 +1,90 @@
-# 📂 Linux File System Operations
+# 🐧 Linux File Operations Lab
 
-> **Linux Administration Laboratory – Experiment 04**
+### Experiment 04 | Linux Administration Laboratory
 
-A practical collection of Linux file and directory management exercises demonstrating file creation, directory handling, text processing, record management, permissions, searching, sorting, and file manipulation using Linux commands.
-
----
-
-## 🎯 Experiment Objective
-
-To practice Linux commands for:
-
-- Creating and organizing directories
-- Creating and editing files
-- Navigating the file system
-- Combining and renaming files
-- Sorting and filtering file contents
-- Extracting specific records
-- Managing file permissions
-- Creating hidden files
-- Copying and deleting directories
-- Counting records
-- Manipulating file contents
+> **From creating a file to processing structured records — this experiment explores practical file-system operations through the Linux terminal.**
 
 ---
 
-# 📌 Question 1 – Basic File and Directory Operations
+## 🔍 What This Experiment Covers
 
-## 🎯 Objective
+This laboratory exercise focuses on three different file-handling scenarios:
 
-To create a directory, generate files, enter data, merge file contents, rename files, and sort the resulting data.
+| Lab Task | Area of Practice | Main Outcome |
+|----------|------------------|--------------|
+| **01** | File & Directory Setup | Create, combine, rename and sort files |
+| **02** | Student Data Handling | Filter, transform, secure and count records |
+| **03** | File Content Processing | Merge files and extract selected data |
 
-## ⌨️ Input / Commands
+---
 
-### 1. Create and enter the directory
+# 🧩 Task 01 — Organizing Department Files
+
+## Scenario
+
+A `CSE` directory is created to maintain separate information about staff, faculty and student representatives.
+
+### Workflow
+
+    Create CSE
+       ↓
+    Enter CSE
+       ↓
+    Create three files
+       ↓
+    Add information
+       ↓
+    Combine staff + faculty
+       ↓
+    Rename combined file
+       ↓
+    Sort the information
+
+## Terminal Session
+
+### Directory Setup
 
     $ mkdir CSE
     $ cd CSE
     $ pwd
 
-### Output
+**Output**
 
     /home/user/CSE
 
-### 2. Create the required files
+### File Creation
 
     $ touch staff faculty stud_rep
     $ ls
 
-### Output
+**Output**
 
     faculty  staff  stud_rep
 
-### 3. Enter data into `staff`
+### Input Data
+
+**staff**
 
     Ravi
     Suresh
     Priya
 
-### 4. Enter data into `faculty`
+**faculty**
 
     Dr. Kumar
     Dr. Meena
     Dr. Anand
 
-### 5. Enter representative information
+**stud_rep**
 
     Arun
 
-### 6. Merge `staff` and `faculty`
+### Combining Files
 
     $ cat staff faculty > "S&F"
     $ cat "S&F"
 
-### Output
+**Output**
 
     Ravi
     Suresh
@@ -81,21 +93,21 @@ To create a directory, generate files, enter data, merge file contents, rename f
     Dr. Meena
     Dr. Anand
 
-### 7. Rename the merged file
+### Renaming
 
     $ mv "S&F" "F&S"
     $ ls
 
-### Output
+**Output**
 
     F&S  faculty  staff  stud_rep
 
-### 8. Sort the contents
+### Sorting
 
     $ sort "F&S" > "newF&S"
     $ cat "newF&S"
 
-### Output
+**Output**
 
     Dr. Anand
     Dr. Kumar
@@ -104,19 +116,19 @@ To create a directory, generate files, enter data, merge file contents, rename f
     Ravi
     Suresh
 
-## ✅ Result
+### Commands Learned
 
-The `CSE` directory and required files were created successfully. The files were merged, renamed, and sorted using Linux commands.
+`mkdir` · `cd` · `pwd` · `touch` · `cat` · `mv` · `sort` · `ls`
 
 ---
 
-# 👨‍🎓 Question 2 – Student Record Processing
+# 👥 Task 02 — Student Record Management
 
-## 🎯 Objective
+## Scenario
 
-To create student records, separate data based on gender, modify file contents, manage permissions, create indexes, and perform directory operations.
+Student information is stored in text files and processed using Linux utilities. The task demonstrates filtering, field selection, text conversion, permissions and record counting.
 
-## ⌨️ Input
+## Initial Dataset
 
 ### NameList
 
@@ -144,22 +156,15 @@ To create student records, separate data based on gender, modify file contents, 
     Indhu     23BCS009    Female    97
     John      23BCS010    Male      93
 
-## 💻 Commands and Outputs
+---
 
-### 1. Create the directory
+## 01 — Separate Records
 
-    $ mkdir IBECSE
-    $ cd IBECSE
-
-### 2. Create student lists
-
-    $ touch NameList MarkList
-
-### 3. Extract male records
+### Male Records
 
     $ grep "Male" MarkList > MaleList
 
-### Output
+**Output**
 
     Arun      23BCS001    Male      98
     Bala      23BCS002    Male      94
@@ -169,17 +174,21 @@ To create student records, separate data based on gender, modify file contents, 
     Hari      23BCS008    Male      90
     John      23BCS010    Male      93
 
-### 4. Extract female records
+### Female Records
 
     $ grep "Female" MarkList > FemaleList
 
-### Output
+**Output**
 
     Divya     23BCS004    Female    99
     Farhana   23BCS006    Female    96
     Indhu     23BCS009    Female    97
 
-### 5. Remove the Gender field
+---
+
+## 02 — Select Required Fields
+
+The gender column is removed so that only the student name, register number and mark remain.
 
     $ awk '{print $1, $2, $4}' MaleList > temp
     $ mv temp MaleList
@@ -187,7 +196,7 @@ To create student records, separate data based on gender, modify file contents, 
     $ awk '{print $1, $2, $4}' FemaleList > temp
     $ mv temp FemaleList
 
-### Output – MaleList
+**MaleList**
 
     Arun 23BCS001 98
     Bala 23BCS002 94
@@ -197,18 +206,14 @@ To create student records, separate data based on gender, modify file contents, 
     Hari 23BCS008 90
     John 23BCS010 93
 
-### Output – FemaleList
+---
 
-    Divya 23BCS004 99
-    Farhana 23BCS006 96
-    Indhu 23BCS009 97
-
-### 6. Convert MaleList to uppercase
+## 03 — Convert Male Records
 
     $ tr '[:lower:]' '[:upper:]' < MaleList > temp
     $ mv temp MaleList
 
-### Output
+**Output**
 
     ARUN 23BCS001 98
     BALA 23BCS002 94
@@ -218,54 +223,87 @@ To create student records, separate data based on gender, modify file contents, 
     HARI 23BCS008 90
     JOHN 23BCS010 93
 
-### 7. Create the hidden index file
+---
+
+## 04 — Generate Index Files
+
+Return to the parent directory:
 
     $ cd ..
+
+Create a hidden directory listing:
+
     $ ls -laR > .Index
 
-### 8. Create FullIndex
+Generate detailed file information:
 
     $ find . -ls > FullIndex
 
-### 9. Change permissions
+---
+
+## 05 — Apply Permissions
+
+### FullIndex → Read Only
 
     $ chmod 444 FullIndex
+
+### .Index → Write Only
+
     $ chmod 222 .Index
-
-### 10. Find regular files
-
-    $ find . -type f > type1
-
-### 11. Copy and remove the directory
-
-    $ cp -r IBECSE R2023CSE
-    $ rm -r IBECSE
-
-### 12. Count student records
-
-    $ wc -l MaleList
-    $ wc -l FemaleList
-    $ cat MaleList FemaleList | wc -l
-
-### Output
-
-    7 MaleList
-    3 FemaleList
-    10
-
-## ✅ Result
-
-Student records were successfully created, filtered, modified, counted, and organized using Linux file-management and text-processing commands.
 
 ---
 
-# 📄 Question 3 – File Merging and Content Manipulation
+## 06 — Identify Regular Files
 
-## 🎯 Objective
+    $ find . -type f > type1
 
-To merge files, extract selected portions of data, create new files, and display file contents with line numbers.
+---
 
-## ⌨️ Input
+## 07 — Duplicate and Remove Directory
+
+Create a copy:
+
+    $ cp -r IBECSE R2023CSE
+
+Remove the original:
+
+    $ rm -r IBECSE
+
+---
+
+## 08 — Count Student Records
+
+    $ wc -l MaleList
+    $ wc -l FemaleList
+
+**Output**
+
+    7 MaleList
+    3 FemaleList
+
+Total:
+
+    $ cat MaleList FemaleList | wc -l
+
+**Output**
+
+    10
+
+### Commands Learned
+
+`grep` · `awk` · `tr` · `find` · `ls` · `chmod` · `cp` · `rm` · `wc`
+
+---
+
+# 📄 Task 03 — Extracting and Rearranging File Data
+
+## Scenario
+
+Three files are prepared and their contents are manipulated to demonstrate merging, line extraction and numbered display.
+
+---
+
+## Source Files
 
 ### NameList
 
@@ -307,23 +345,22 @@ To merge files, extract selected portions of data, create new files, and display
 
     Arun
 
-## 💻 Commands and Outputs
+---
 
-### 1. Create the directory
+## 01 — Build the Working Directory
 
     $ mkdir Ex3
     $ cd Ex3
-
-### 2. Create the files
-
     $ touch MarkList NameList StudRep
 
-### 3. Merge NameList and MarkList
+---
+
+## 02 — Combine Related Data
 
     $ paste NameList MarkList > Detail1
     $ cat Detail1
 
-### Output
+**Output**
 
     Arun      98
     Bala      94
@@ -341,16 +378,22 @@ To merge files, extract selected portions of data, create new files, and display
     Nisha     96
     Praveen   91
 
-### 4. Arrange Detail1 into a single line
+---
+
+## 03 — Convert the Arrangement
 
     $ paste -s Detail1 > Detail2
 
-### 5. Copy the first 8 lines
+This produces a single-line arrangement of the contents of `Detail1`.
+
+---
+
+## 04 — Extract the First Eight Records
 
     $ head -8 Detail1 > file1
     $ cat file1
 
-### Output
+**Output**
 
     Arun      98
     Bala      94
@@ -361,27 +404,31 @@ To merge files, extract selected portions of data, create new files, and display
     Ganesh    92
     Hari      90
 
-### 6. Copy the last 4 lines of file1
+---
+
+## 05 — Extract the Final Four Records
 
     $ tail -4 file1 > file2
     $ cat file2
 
-### Output
+**Output**
 
     Ezhil     95
     Farhana   96
     Ganesh    92
     Hari      90
 
-### 7. Extract Detail1 from line 4
+---
+
+## 06 — Start Extraction from Line Four
 
     $ tail -n +4 Detail1 > file3
 
-### 8. Display file3 with line numbers
+Display the generated file with numbering:
 
     $ cat -n file3
 
-### Output
+**Output**
 
     1  Divya     99
     2  Ezhil     95
@@ -396,76 +443,88 @@ To merge files, extract selected portions of data, create new files, and display
     11 Nisha     96
     12 Praveen   91
 
-## ✅ Result
+### Commands Learned
 
-The required files were created and processed successfully. File contents were merged, selected lines were extracted, new files were generated, and the final contents were displayed with line numbers.
-
----
-
-# 📚 Commands Used
-
-| Command | Purpose |
-|---------|---------|
-| `mkdir` | Creates directories |
-| `cd` | Changes directory |
-| `pwd` | Displays current location |
-| `touch` | Creates files |
-| `nano` | Edits files |
-| `cat` | Displays and combines contents |
-| `mv` | Renames or moves files |
-| `sort` | Sorts file contents |
-| `grep` | Extracts matching records |
-| `awk` | Selects specific fields |
-| `tr` | Transforms text |
-| `ls` | Lists files and directories |
-| `find` | Searches for files |
-| `chmod` | Changes permissions |
-| `cp -r` | Copies directories |
-| `rm -r` | Removes directories |
-| `wc -l` | Counts lines |
-| `paste` | Combines file contents |
-| `head` | Extracts beginning lines |
-| `tail` | Extracts ending or selected lines |
-| `cat -n` | Displays line numbers |
+`paste` · `head` · `tail` · `cat -n`
 
 ---
 
-# 🧠 Skills Practiced
+# 🛠️ Command Reference
+
+| Command | Applied For |
+|---------|-------------|
+| `mkdir` | Directory creation |
+| `cd` | Directory navigation |
+| `pwd` | Location verification |
+| `touch` | File creation |
+| `nano` | Data entry and editing |
+| `ls` | Directory listing |
+| `cat` | Reading and combining files |
+| `mv` | Renaming files |
+| `sort` | Ordering text |
+| `grep` | Record filtering |
+| `awk` | Column extraction |
+| `tr` | Character conversion |
+| `find` | File discovery |
+| `chmod` | Permission control |
+| `cp` | Copying directories |
+| `rm` | Removing directories |
+| `wc` | Record counting |
+| `paste` | Combining related data |
+| `head` | Beginning-section extraction |
+| `tail` | End/position-based extraction |
+
+---
+
+# 📊 Experiment Snapshot
+
+    Files Created        → Multiple text and record files
+    Directories Used     → CSE, IBECSE, R2023CSE, Ex3
+    Data Operations      → Merge, filter, sort, extract
+    Permission Tasks     → Read-only / Write-only
+    Record Processing    → Student data
+    Line Processing      → head / tail / cat -n
+
+---
+
+# 🎓 Skills Gained
+
+By completing this experiment, I practiced:
 
 - Linux file-system navigation
-- File and directory creation
-- File content management
-- Text filtering and transformation
-- Student record processing
-- File merging
-- Sorting and extraction
-- Permission management
-- Recursive directory operations
-- Command-line problem solving
+- Directory and file creation
+- File-content manipulation
+- Data filtering with patterns
+- Column-based text processing
+- Sorting and merging information
+- File permission management
+- Recursive copying and deletion
+- Line-based data extraction
+- Command-line record counting
 
 ---
 
-# 💻 Technologies Used
+# 💻 Environment
 
-- **Operating System:** Linux
-- **Shell:** Bash / Linux Terminal
-- **Text Editor:** Nano
+**Operating System:** Linux  
+**Shell Environment:** Bash / Linux Terminal  
+**Editor:** Nano  
+**Laboratory:** Linux Administration Laboratory
 
 ---
 
-# 👩‍💻 Academic Information
+# 👩‍💻 Student Details
 
 **Name:** Krithika Umasankar  
 **Course:** B.E. Computer Science and Engineering  
 **Year:** 2nd Year  
-**Institution:** Mepco Schlenk Engineering College  
-**Laboratory:** Linux Administration Laboratory  
+**College:** Mepco Schlenk Engineering College  
 **Experiment:** 04 – File and Directory Management
 
 ---
 
-## ⭐ Repository
+# ✅ Completion
 
-This experiment provides hands-on practice with Linux commands used for managing files, directories, text data, permissions, and student records.
+This experiment provided practical experience in handling Linux files and directories while also introducing command-line techniques for processing structured text and student records.
 
-**Learn the command. Understand the operation. Practice it in the terminal.**
+**Create → Process → Organize → Verify**
