@@ -2,7 +2,7 @@
 
 > **Linux Administration Laboratory – Experiment 04**
 
-A practical collection of Linux file and directory management exercises demonstrating how standard shell commands can be used to organize files, process data, manage permissions, and perform basic file-system operations.
+A practical collection of Linux file and directory management exercises demonstrating file creation, directory handling, text processing, record management, permissions, searching, sorting, and file manipulation using Linux commands.
 
 ---
 
@@ -24,228 +24,432 @@ To practice Linux commands for:
 
 ---
 
-## 📌 Experiment Overview
+# 📌 Question 1 – Basic File and Directory Operations
 
-This experiment is divided into three practical sections:
+## 🎯 Objective
 
-| Section | Main Focus |
-|--------|------------|
-| **Question 1** | Basic file and directory operations |
-| **Question 2** | Student records and file management |
-| **Question 3** | File merging and content manipulation |
+To create a directory, generate files, enter data, merge file contents, rename files, and sort the resulting data.
 
----
+## ⌨️ Input / Commands
 
-# 🗂️ Question 1 – Basic File and Directory Operations
+### 1. Create and enter the directory
 
-### Tasks Performed
+    $ mkdir CSE
+    $ cd CSE
+    $ pwd
 
-- Create the `CSE` directory
-- Navigate into the directory
-- Display the current working location
-- Create `staff`, `faculty`, and `stud_rep` files
-- Add sample information
-- Combine `staff` and `faculty`
-- Rename the merged file
-- Sort the contents into a new file
+### Output
 
-### Commands Practiced
+    /home/user/CSE
 
-| Command | Purpose |
-|---------|---------|
-| `mkdir` | Create a directory |
-| `cd` | Move between directories |
-| `pwd` | Display the current location |
-| `touch` | Create empty files |
-| `nano` | Edit file contents |
-| `cat` | View or combine file contents |
-| `mv` | Rename or move files |
-| `sort` | Arrange file contents |
+### 2. Create the required files
 
-### File Flow
+    $ touch staff faculty stud_rep
+    $ ls
 
-    staff + faculty
-          ↓
-        S&F
-          ↓
-        F&S
-          ↓
-       newF&S
-      (sorted)
+### Output
+
+    faculty  staff  stud_rep
+
+### 3. Enter data into `staff`
+
+    Ravi
+    Suresh
+    Priya
+
+### 4. Enter data into `faculty`
+
+    Dr. Kumar
+    Dr. Meena
+    Dr. Anand
+
+### 5. Enter representative information
+
+    Arun
+
+### 6. Merge `staff` and `faculty`
+
+    $ cat staff faculty > "S&F"
+    $ cat "S&F"
+
+### Output
+
+    Ravi
+    Suresh
+    Priya
+    Dr. Kumar
+    Dr. Meena
+    Dr. Anand
+
+### 7. Rename the merged file
+
+    $ mv "S&F" "F&S"
+    $ ls
+
+### Output
+
+    F&S  faculty  staff  stud_rep
+
+### 8. Sort the contents
+
+    $ sort "F&S" > "newF&S"
+    $ cat "newF&S"
+
+### Output
+
+    Dr. Anand
+    Dr. Kumar
+    Dr. Meena
+    Priya
+    Ravi
+    Suresh
+
+## ✅ Result
+
+The `CSE` directory and required files were created successfully. The files were merged, renamed, and sorted using Linux commands.
 
 ---
 
 # 👨‍🎓 Question 2 – Student Record Processing
 
-### Tasks Performed
+## 🎯 Objective
 
-A student information directory is created and used to demonstrate several Linux file-management techniques.
+To create student records, separate data based on gender, modify file contents, manage permissions, create indexes, and perform directory operations.
 
-The practical includes:
+## ⌨️ Input
 
-- Creating the `IBECSE` directory
-- Preparing a `NameList`
-- Creating a `MarkList`
-- Separating male and female records
-- Removing unwanted fields
-- Converting text to uppercase
-- Creating hidden and detailed index files
-- Changing file permissions
-- Listing regular files
-- Copying a directory
-- Removing the original directory
-- Counting student records
+### NameList
 
-### Data Processing Flow
+    Arun
+    Bala
+    Charan
+    Divya
+    Ezhil
+    Farhana
+    Ganesh
+    Hari
+    Indhu
+    John
 
-    MarkList
-       │
-       ├── Male records ──→ MaleList
-       │
-       └── Female records → FemaleList
+### MarkList
 
-### Commands Practiced
+    Arun      23BCS001    Male      98
+    Bala      23BCS002    Male      94
+    Charan    23BCS003    Male      91
+    Divya     23BCS004    Female    99
+    Ezhil     23BCS005    Male      95
+    Farhana   23BCS006    Female    96
+    Ganesh    23BCS007    Male      92
+    Hari      23BCS008    Male      90
+    Indhu     23BCS009    Female    97
+    John      23BCS010    Male      93
+
+## 💻 Commands and Outputs
+
+### 1. Create the directory
+
+    $ mkdir IBECSE
+    $ cd IBECSE
+
+### 2. Create student lists
+
+    $ touch NameList MarkList
+
+### 3. Extract male records
+
+    $ grep "Male" MarkList > MaleList
+
+### Output
+
+    Arun      23BCS001    Male      98
+    Bala      23BCS002    Male      94
+    Charan    23BCS003    Male      91
+    Ezhil     23BCS005    Male      95
+    Ganesh    23BCS007    Male      92
+    Hari      23BCS008    Male      90
+    John      23BCS010    Male      93
+
+### 4. Extract female records
+
+    $ grep "Female" MarkList > FemaleList
+
+### Output
+
+    Divya     23BCS004    Female    99
+    Farhana   23BCS006    Female    96
+    Indhu     23BCS009    Female    97
+
+### 5. Remove the Gender field
+
+    $ awk '{print $1, $2, $4}' MaleList > temp
+    $ mv temp MaleList
+
+    $ awk '{print $1, $2, $4}' FemaleList > temp
+    $ mv temp FemaleList
+
+### Output – MaleList
+
+    Arun 23BCS001 98
+    Bala 23BCS002 94
+    Charan 23BCS003 91
+    Ezhil 23BCS005 95
+    Ganesh 23BCS007 92
+    Hari 23BCS008 90
+    John 23BCS010 93
+
+### Output – FemaleList
+
+    Divya 23BCS004 99
+    Farhana 23BCS006 96
+    Indhu 23BCS009 97
+
+### 6. Convert MaleList to uppercase
+
+    $ tr '[:lower:]' '[:upper:]' < MaleList > temp
+    $ mv temp MaleList
+
+### Output
+
+    ARUN 23BCS001 98
+    BALA 23BCS002 94
+    CHARAN 23BCS003 91
+    EZHIL 23BCS005 95
+    GANESH 23BCS007 92
+    HARI 23BCS008 90
+    JOHN 23BCS010 93
+
+### 7. Create the hidden index file
+
+    $ cd ..
+    $ ls -laR > .Index
+
+### 8. Create FullIndex
+
+    $ find . -ls > FullIndex
+
+### 9. Change permissions
+
+    $ chmod 444 FullIndex
+    $ chmod 222 .Index
+
+### 10. Find regular files
+
+    $ find . -type f > type1
+
+### 11. Copy and remove the directory
+
+    $ cp -r IBECSE R2023CSE
+    $ rm -r IBECSE
+
+### 12. Count student records
+
+    $ wc -l MaleList
+    $ wc -l FemaleList
+    $ cat MaleList FemaleList | wc -l
+
+### Output
+
+    7 MaleList
+    3 FemaleList
+    10
+
+## ✅ Result
+
+Student records were successfully created, filtered, modified, counted, and organized using Linux file-management and text-processing commands.
+
+---
+
+# 📄 Question 3 – File Merging and Content Manipulation
+
+## 🎯 Objective
+
+To merge files, extract selected portions of data, create new files, and display file contents with line numbers.
+
+## ⌨️ Input
+
+### NameList
+
+    Arun
+    Bala
+    Charan
+    Divya
+    Ezhil
+    Farhana
+    Ganesh
+    Hari
+    Indhu
+    John
+    Kavin
+    Lakshmi
+    Manoj
+    Nisha
+    Praveen
+
+### MarkList
+
+    98
+    94
+    91
+    99
+    95
+    96
+    92
+    90
+    97
+    93
+    89
+    88
+    94
+    96
+    91
+
+### StudRep
+
+    Arun
+
+## 💻 Commands and Outputs
+
+### 1. Create the directory
+
+    $ mkdir Ex3
+    $ cd Ex3
+
+### 2. Create the files
+
+    $ touch MarkList NameList StudRep
+
+### 3. Merge NameList and MarkList
+
+    $ paste NameList MarkList > Detail1
+    $ cat Detail1
+
+### Output
+
+    Arun      98
+    Bala      94
+    Charan    91
+    Divya     99
+    Ezhil     95
+    Farhana   96
+    Ganesh    92
+    Hari      90
+    Indhu     97
+    John      93
+    Kavin     89
+    Lakshmi   88
+    Manoj     94
+    Nisha     96
+    Praveen   91
+
+### 4. Arrange Detail1 into a single line
+
+    $ paste -s Detail1 > Detail2
+
+### 5. Copy the first 8 lines
+
+    $ head -8 Detail1 > file1
+    $ cat file1
+
+### Output
+
+    Arun      98
+    Bala      94
+    Charan    91
+    Divya     99
+    Ezhil     95
+    Farhana   96
+    Ganesh    92
+    Hari      90
+
+### 6. Copy the last 4 lines of file1
+
+    $ tail -4 file1 > file2
+    $ cat file2
+
+### Output
+
+    Ezhil     95
+    Farhana   96
+    Ganesh    92
+    Hari      90
+
+### 7. Extract Detail1 from line 4
+
+    $ tail -n +4 Detail1 > file3
+
+### 8. Display file3 with line numbers
+
+    $ cat -n file3
+
+### Output
+
+    1  Divya     99
+    2  Ezhil     95
+    3  Farhana   96
+    4  Ganesh    92
+    5  Hari      90
+    6  Indhu     97
+    7  John      93
+    8  Kavin     89
+    9  Lakshmi   88
+    10 Manoj     94
+    11 Nisha     96
+    12 Praveen   91
+
+## ✅ Result
+
+The required files were created and processed successfully. File contents were merged, selected lines were extracted, new files were generated, and the final contents were displayed with line numbers.
+
+---
+
+# 📚 Commands Used
 
 | Command | Purpose |
 |---------|---------|
-| `grep` | Select matching records |
-| `awk` | Extract required fields |
-| `tr` | Transform text |
-| `ls -laR` | Display files including hidden entries |
-| `find` | Search and list files |
-| `chmod` | Modify permissions |
-| `cp -r` | Copy directories recursively |
-| `rm -r` | Remove directories recursively |
-| `wc -l` | Count lines or records |
+| `mkdir` | Creates directories |
+| `cd` | Changes directory |
+| `pwd` | Displays current location |
+| `touch` | Creates files |
+| `nano` | Edits files |
+| `cat` | Displays and combines contents |
+| `mv` | Renames or moves files |
+| `sort` | Sorts file contents |
+| `grep` | Extracts matching records |
+| `awk` | Selects specific fields |
+| `tr` | Transforms text |
+| `ls` | Lists files and directories |
+| `find` | Searches for files |
+| `chmod` | Changes permissions |
+| `cp -r` | Copies directories |
+| `rm -r` | Removes directories |
+| `wc -l` | Counts lines |
+| `paste` | Combines file contents |
+| `head` | Extracts beginning lines |
+| `tail` | Extracts ending or selected lines |
+| `cat -n` | Displays line numbers |
 
 ---
 
-# 📄 Question 3 – File Merging and Content Processing
+# 🧠 Skills Practiced
 
-### Tasks Performed
-
-- Create the `Ex3` directory
-- Prepare `MarkList`, `NameList`, and `StudRep`
-- Combine student names and marks
-- Generate a single-line representation
-- Extract the first 8 lines
-- Extract the last 4 lines
-- Extract data starting from a particular line
-- Display extracted data with line numbers
-
-### File Processing Flow
-
-    NameList + MarkList
-            ↓
-         Detail1
-            ↓
-       ┌────┼─────┐
-       ↓    ↓     ↓
-    Detail2 file1  file3
-             ↓
-            file2
-
-### Commands Practiced
-
-| Command | Purpose |
-|---------|---------|
-| `paste` | Combine file contents |
-| `head` | Extract beginning lines |
-| `tail` | Extract ending or selected portions |
-| `cat -n` | Display contents with line numbers |
-
----
-
-# 🧰 Complete Command Set
-
-The experiment provides hands-on practice with the following Linux utilities:
-
-`mkdir` · `cd` · `pwd` · `touch` · `nano` · `cat` · `mv` · `sort` · `grep` · `awk` · `tr` · `ls` · `find` · `chmod` · `cp` · `rm` · `wc` · `paste` · `head` · `tail`
-
----
-
-# 🔐 File Permission Practice
-
-Permission management is demonstrated using `chmod`.
-
-| File | Permission Requirement |
-|------|------------------------|
-| `FullIndex` | Read Only |
-| `.Index` | Write Only |
-
-Example commands:
-
-    chmod 444 FullIndex
-    chmod 222 .Index
-
-This provides practical exposure to Linux file-access permissions.
-
----
-
-# 🔎 File and Directory Operations Covered
-
-- Directory creation
-- Directory navigation
-- File creation
-- File editing
-- File viewing
+- Linux file-system navigation
+- File and directory creation
+- File content management
+- Text filtering and transformation
+- Student record processing
 - File merging
-- File renaming
-- Content sorting
-- Pattern-based extraction
-- Field extraction
-- Text conversion
-- Hidden file creation
-- Permission modification
-- File searching
-- Directory copying
-- Directory deletion
-- Record counting
-
----
-
-# 📚 Learning Outcomes
-
-After completing this experiment, the following skills are developed:
-
-- Understanding the Linux file-system structure
-- Working confidently with files and directories
-- Using command-line utilities for data processing
-- Extracting and transforming structured text
-- Applying Linux file permissions
-- Managing directories recursively
-- Combining multiple commands for practical tasks
-- Performing basic student-record processing through shell commands
+- Sorting and extraction
+- Permission management
+- Recursive directory operations
+- Command-line problem solving
 
 ---
 
 # 💻 Technologies Used
 
 - **Operating System:** Linux
-- **Shell:** Bash / Linux Command Line
-- **Editor:** Nano
-- **Environment:** Linux Terminal
-
----
-
-# 🧠 Key Takeaways
-
-This experiment demonstrates that Linux provides simple command-line utilities that can be combined to perform complete file-management workflows.
-
-The practical work covers both basic operations such as creating and renaming files and advanced tasks such as filtering records, modifying permissions, searching directories, and processing selected portions of files.
-
----
-
-# 📁 Practical Areas
-
-| Area | Skills |
-|------|--------|
-| File Management | Create, edit, rename and view files |
-| Directory Management | Create, navigate, copy and remove directories |
-| Text Processing | Search, extract, transform and sort data |
-| Data Handling | Merge files and process records |
-| Permissions | Modify file access permissions |
-| File Searching | Locate and list required files |
+- **Shell:** Bash / Linux Terminal
+- **Text Editor:** Nano
 
 ---
 
@@ -260,16 +464,8 @@ The practical work covers both basic operations such as creating and renaming fi
 
 ---
 
-# 🌱 Learning Focus
-
-This experiment strengthens practical Linux administration skills by connecting individual shell commands with real file-system management tasks.
-
-The main focus is on **command-line efficiency, file organization, text processing, permissions, and systematic problem solving**.
-
----
-
 ## ⭐ Repository
 
-If this laboratory work is useful for your Linux learning journey, feel free to explore the repository and use it as a reference for practicing Linux commands.
+This experiment provides hands-on practice with Linux commands used for managing files, directories, text data, permissions, and student records.
 
-**Keep learning. Keep experimenting. Keep improving.**
+**Learn the command. Understand the operation. Practice it in the terminal.**
